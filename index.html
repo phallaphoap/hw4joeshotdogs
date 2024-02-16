@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joe's Hotdog Stand</title>
+    <link rel="stylesheet" href="landing-styles.css" />
+</head>
+
+<body>
+    <h1>Welcome to Joe's Hotdog Stand</h1>
+
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="hotdog-icon.jpeg" alt="Hotdog Icon" />
+            <p>Hotdog - $4.65 each</p>
+        </div>
+
+        <div class="menu-item">
+            <img src="fries-icon.jpeg" alt="Fries Icon" />
+            <p>Fries - $3.75 each</p>
+        </div>
+
+        <div class="menu-item">
+            <img src="soda-icon.jpeg" alt="Soda Icon" />
+            <p>Soda - $1.89 each</p>
+        </div>
+    </div>
+
+    <button id="orderButton" onclick="placeOrder()">Order Now</button>
+
+    <script>
+        function showMoney(amount) {
+            const roundedAmount = Math.round(amount * 100) / 100;
+            const integerPart = Math.floor(roundedAmount);
+            const decimalPart = Math.round((roundedAmount - integerPart) * 100);
+
+            const formattedDecimal =
+                decimalPart < 10 ? "0" + decimalPart : "" + decimalPart;
+
+            return integerPart + "." + formattedDecimal;
+        }
+
+        function placeOrder() {
+            const HOTDOG_PRICE = 4.65;
+            const FRIES_PRICE = 3.75;
+            const SODA_PRICE = 1.89;
+            const DISCOUNT_THRESHOLD = 25;
+            const TAX_RATE = 0.0625;
+
+            function getValidNumber(promptMessage) {
+                let input = prompt(promptMessage);
+                let number = parseInt(input);
+                // Check if the parsed number is NaN or less than 0, set invalidEntryDetected to true
+                if (isNaN(number) || number < 0) {
+                    invalidEntryDetected = true; // Set invalidEntryDetected to true for invalid entries
+                    return 0; // Return 0 for invalid entries
+                }
+                return number;
+            }
+
+            let invalidEntryDetected = false;
+
+            const numDogs = getValidNumber("How many hotdogs do you want?");
+            const numFries = getValidNumber("How many fries do you want?");
+            const numSoda = getValidNumber("How many sodas do you want?");
+
+            const subtotal =
+                numDogs * HOTDOG_PRICE +
+                numFries * FRIES_PRICE +
+                numSoda * SODA_PRICE;
+            const discount = subtotal >= DISCOUNT_THRESHOLD ? subtotal * 0.1 : 0;
+            const discountedSubtotal = subtotal - discount;
+            const taxAmount = discountedSubtotal * TAX_RATE;
+            const finalTotal = discountedSubtotal + taxAmount;
+
+            // Change the layout of the menu-container to display icons horizontally
+            const menuContainer = document.querySelector('.menu-container');
+            menuContainer.style.flexDirection = 'row';
+            menuContainer.style.flexWrap = 'wrap';
+            menuContainer.style.justifyContent = 'center';
+
+            const orderDetails = `
+                <div class="order-details">
+                    <h2>Your Order Details</h2>
+                    ${invalidEntryDetected ? '<p style="color: red;">Invalid entries detected. Please enter positive numbers or 0 for all items.</p>' : ''}
+                    <p>Quantity of Hotdogs: ${numDogs} <br> Total: $${showMoney(numDogs * HOTDOG_PRICE)}</p>
+                    <p>Quantity of Fries: ${numFries} <br> Total: $${showMoney(numFries * FRIES_PRICE)}</p>
+                    <p>Quantity of Sodas: ${numSoda} <br> Total: $${showMoney(numSoda * SODA_PRICE)}</p>
+                    <hr>
+                    <p>Subtotal before discount: $${showMoney(subtotal)}</p>
+                    <p>Discount: $${showMoney(discount)}</p>
+                    <p>Subtotal after discount: $${showMoney(discountedSubtotal)}</p>
+                    <p>Tax amount: $${showMoney(taxAmount)}</p>
+                    <h2>Final Total: $${showMoney(finalTotal)}</h2>
+                </div>
+            `;
+
+            document.body.innerHTML += orderDetails;
+
+            const orderButton = document.getElementById('orderButton');
+            orderButton.textContent = 'Return to Home';
+
+
+            orderButton.onclick = function () {
+                location.reload();
+            };
+
+            // Move the button to the bottom of the content
+            document.body.appendChild(orderButton);
+        }
+    </script>
+</body>
+
+</html>

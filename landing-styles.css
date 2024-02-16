@@ -1,0 +1,65 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f8f8f8;
+    color: #333;
+    text-align: center;
+}
+
+h1 {
+    color: #ff6347;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column; /* This will be overridden by JavaScript */
+    align-items: center;
+    flex-wrap: wrap; /* Ensures items wrap if they don't fit in a single row */
+    justify-content: center; /* Centers items horizontally */
+}
+
+.menu-item {
+    text-align: center;
+    margin: 20px;
+}
+
+.menu-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.menu-item p {
+    margin: 8px 0;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.order-details {
+    font-family: 'Courier New', Courier, monospace; /* Mimics print from a receipt printer */
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    text-align: left;
+    padding: 20px;
+    margin: 20px auto; /* Center the receipt in the page */
+    width: 300px; /* Narrow, like a receipt */
+    border: 1px solid #ccc; /* Light border around the receipt */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Additional styling for the header to make it stand out */
+.order-details h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
